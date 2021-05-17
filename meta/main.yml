@@ -1,0 +1,19 @@
+galaxy_info:
+  role_name: substrate_connect_envoy_config
+  author: Richard Mah (@shinyfoil)
+  description: A role to configure Consul Connect and Envoy for VM-based Substrate services
+  company: Geometry Labs, Inc.
+
+  license: Apache-2.0
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags: []
+
+dependencies: []

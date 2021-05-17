@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include substrate-connect-envoy-config"
+      include_role:
+        name: "substrate-connect-envoy-config"
