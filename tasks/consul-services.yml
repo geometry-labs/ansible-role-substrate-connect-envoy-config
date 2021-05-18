@@ -11,6 +11,7 @@
       network_name: "{{ item.value['shortname'] }}"
       service_port: "{{ item.value['json_rpc'] }}"
       json_service_port: "{{ item.value['json_rpc'] }}"
+      envoy_port: "{{ item.value['envoy_port'] }}"
       instance_id: aws_instance_id.content
 
   - name: Create service file for WS endpoint
@@ -25,6 +26,7 @@
       network_name: "{{ item.value['shortname'] }}"
       service_port: "{{ item.value['ws_rpc'] }}"
       json_service_port: "{{ item.value['json_rpc'] }}"
+      envoy_port: "{{ item.value['envoy_port'] }}"
       instance_id: aws_instance_id.content
 
   when: not health_check_enabled
@@ -42,6 +44,7 @@
       network_name: "{{ item.value['shortname'] }}"
       service_port: "{{ item.value['json_rpc'] }}"
       health_check_port: "{{ item.value['api_health'] }}"
+      envoy_port: "{{ item.value['envoy_port'] }}"
       instance_id: aws_instance_id.content
 
   - name: Create service file for WS endpoint
@@ -56,6 +59,7 @@
       network_name: "{{ item.value['shortname'] }}"
       service_port: "{{ item.value['json_rpc'] }}"
       health_check_port: "{{ item.value['api_health'] }}"
+      envoy_port: "{{ item.value['envoy_port'] }}"
       instance_id: aws_instance_id.content
 
   when: health_check_enabled

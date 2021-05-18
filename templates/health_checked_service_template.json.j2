@@ -4,7 +4,9 @@
         "id": "{{ instance_id }}-{{ network_name }}-{{ protocol }}",
         "port": {{ service_port }},
         "connect": {
-            "sidecar_service": {}
+            "sidecar_service": {
+                "port": {{ envoy_port }}
+            }
         },
         "check": {
             "http": "http://localhost:{{ health_check_port }}",
