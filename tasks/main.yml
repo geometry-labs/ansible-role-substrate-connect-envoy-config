@@ -5,6 +5,9 @@
     return_content: yes
   register: aws_instance_id
 
+- name: Firewall rules
+  import_tasks: ufw.yml
+
 - name: Create consul services
   include_tasks: consul-services.yml
   loop: "{{ network_settings | from_json | dict2items }}"

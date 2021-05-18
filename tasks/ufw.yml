@@ -1,0 +1,20 @@
+- name: Ensure UFW
+  apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: UFW already enabled
+  command: ufw status verbose
+  register: ufw_status_result
+  changed_when: False
+
+- name: Open proxy ports (TCP)
+  command: ufw allow 21000:21255/tcp
+  when:
+    - not ufw_status_result.stdout is search("21000:21255/tcp.*ALLOW IN.*Anywhere")
+
+- name: Open proxy ports (UDP)
+  command: ufw allow 21000:21255/udp
+  when:
+    - not ufw_status_result.stdout is search("21000:21255/udp.*ALLOW IN.*Anywhere")
