@@ -24,6 +24,6 @@
 - name: Install cert refresh cron
   cron:
     name: "Refresh mTLS certs"
-    minute: "{{ 60 | random(seed=instance_id) }}"
+    minute: "{{ 60 | random(seed=aws_instance_id.content) }}"
     hour: 3
     job: "/etc/consul/refresh_certs.sh"
