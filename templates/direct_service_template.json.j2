@@ -1,0 +1,20 @@
+{
+    "service": {
+        "name": "{{ network_name }}-{{ protocol }}",
+        "id": "{{ instance_id }}-{{ network_name }}-{{ protocol }}",
+        "port": {{ service_port }},
+        "connect": {
+            "sidecar_service": {}
+        },
+        "check": {
+            "http": "http://localhost:{{ json_service_port }}",
+            "method": "POST",
+            "header": {
+                "Content-Type": ["application/json"]
+            },
+            "body": "{ \"jsonrpc\":\"2.0\", \"method\":\"system_health\", \"params\":[],\"id\":1 }",
+            "interval": "15s",
+            "timeout": "5s"
+        }
+    }
+}

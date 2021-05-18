@@ -1,0 +1,61 @@
+- block:
+  - name: Create service file for JSON endpoint
+    template:
+      src: direct_service_template.json.j2
+      dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_json.json"
+      owner: root
+      group: root
+      mode: 0600
+    vars:
+      protocol: "json"
+      network_name: "{{ item.value['shortname'] }}"
+      service_port: "{{ item.value['json_rpc'] }}"
+      json_service_port: "{{ item.value['json_rpc'] }}"
+      instance_id: aws_instance_id.content
+
+  - name: Create service file for WS endpoint
+    template:
+      src: direct_service_template.json.j2
+      dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_ws.json"
+      owner: root
+      group: root
+      mode: 0600
+    vars:
+      protocol: "ws"
+      network_name: "{{ item.value['shortname'] }}"
+      service_port: "{{ item.value['ws_rpc'] }}"
+      json_service_port: "{{ item.value['json_rpc'] }}"
+      instance_id: aws_instance_id.content
+
+  when: not health_check_enabled
+
+- block:
+  - name: Create service file for JSON endpoint
+    template:
+      src: health_checked_service_template.json.j2
+      dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_json.json"
+      owner: root
+      group: root
+      mode: 0600
+    vars:
+      protocol: "json"
+      network_name: "{{ item.value['shortname'] }}"
+      service_port: "{{ item.value['json_rpc'] }}"
+      health_check_port: "{{ item.value['api_health'] }}"
+      instance_id: aws_instance_id.content
+
+  - name: Create service file for WS endpoint
+    template:
+      src: health_checked_service_template.json.j2
+      dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_ws.json"
+      owner: root
+      group: root
+      mode: 0600
+    vars:
+      protocol: "ws"
+      network_name: "{{ item.value['shortname'] }}"
+      service_port: "{{ item.value['json_rpc'] }}"
+      health_check_port: "{{ item.value['api_health'] }}"
+      instance_id: aws_instance_id.content
+
+  when: health_check_enabled

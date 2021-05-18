@@ -1,0 +1,26 @@
+- block:
+  - name: Create unit file for JSON endpoint
+    template:
+      src: connect_envoy.service.j2
+      dest: /etc/systemd/system/service_{{ item.value['shortname'] }}_json.service
+      owner: root
+      group: root
+      mode: 0600
+    vars:
+      protocol: "json"
+      network_name: "{{ item.value['shortname'] }}"
+      instance_id: aws_instance_id.content
+      envoy_admin_port: "{{ item.value['envoy_port'] }}"
+
+  - name: Create unit file for WS endpoint
+    template:
+      src: direct_service_template.json.j2
+      dest: /etc/systemd/system/service_{{ item.value['shortname'] }}_ws.service
+      owner: root
+      group: root
+      mode: 0600
+    vars:
+      protocol: "ws"
+      network_name: "{{ item.value['shortname'] }}"
+      instance_id: aws_instance_id.content
+      envoy_admin_port: "{{ item.value['envoy_port'] }}"

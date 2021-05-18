@@ -1,0 +1,29 @@
+- name: Download Consul CA root
+  shell: set -o pipefail && curl http://127.0.0.1:8500/v1/agent/connect/ca/roots | jq '.Roots[] | .RootCert' -r > /etc/consul/ssl/connect-ca.crt
+  changed_when: false
+
+- name: Set Consul CA root permissions
+  file:
+    path: /etc/consul/ssl/connect-ca.crt
+    owner: consul
+    group: bin
+    mode: '0644'
+
+- name: Template cert refresh script
+  template:
+    src: refresh_certs.sh.j2
+    dest: /etc/consul/refresh_certs.sh
+    owner: root
+    group: root
+    mode: '0744'
+
+- name: Run cert refresh script
+  script:
+    cmd: /etc/consul/refresh_certs.sh
+
+- name: Install cert refresh cron
+  cron:
+    name: "Refresh mTLS certs"
+    minute: "{{ 60 | random(seed=instance_id) }}"
+    hour: 3
+    job: "/etc/consul/refresh_certs.sh"

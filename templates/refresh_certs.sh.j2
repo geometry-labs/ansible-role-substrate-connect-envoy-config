@@ -1,0 +1,14 @@
+{% for network in network_settings }
+{% for protocol in ["json", "ws"] }
+curl http://127.0.0.1:8500/v1/agent/connect/ca/leaf/{{ network['shortname'] }}-{{ protocol }}-sidecar-proxy > /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}-cert-resp
+
+cat /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}-cert-resp | jq '.CertPEM' -r > /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}.crt
+chown consul:bin /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}.crt
+chmod 640 /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}.crt
+
+cat /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}-cert-resp | jq '.PrivateKeyPEM' -r > /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}.key
+chown consul:bin /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}.key
+chmod 640 /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}.key
+
+{% endfor %}
+{% endfor %}
