@@ -10,7 +10,7 @@
       protocol: "json"
       network_name: "{{ item.value['shortname'] }}"
       instance_id: aws_instance_id.content
-      envoy_port: "{{ item.value['envoy_port'] }}"
+      envoy_port: "{{ item.value['json_envoy'] }}"
 
   - name: Create unit file for WS endpoint
     template:
@@ -23,4 +23,4 @@
       protocol: "ws"
       network_name: "{{ item.value['shortname'] }}"
       instance_id: aws_instance_id.content
-      envoy_port: "{{ item.value['envoy_port'] }}"
+      envoy_port: "{{ item.value['ws_envoy'] }}"
