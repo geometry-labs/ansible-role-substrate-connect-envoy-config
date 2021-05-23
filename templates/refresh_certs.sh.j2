@@ -1,5 +1,5 @@
-{% for network in network_settings }
-{% for protocol in ["json", "ws"] }
+{% for network in network_settings %}
+{% for protocol in ["json", "ws"] %}
 curl http://127.0.0.1:8500/v1/agent/connect/ca/leaf/{{ network['shortname'] }}-{{ protocol }}-sidecar-proxy > /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}-cert-resp
 
 cat /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}-cert-resp | jq '.CertPEM' -r > /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}.crt
