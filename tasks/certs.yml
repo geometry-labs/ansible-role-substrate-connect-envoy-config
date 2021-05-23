@@ -1,5 +1,7 @@
 - name: Download Consul CA root
   shell: set -o pipefail && curl http://127.0.0.1:8500/v1/agent/connect/ca/roots | jq '.Roots[] | .RootCert' -r > /etc/consul/ssl/connect-ca.crt
+  args:
+    executable: /bin/bash
   changed_when: false
 
 - name: Set Consul CA root permissions
