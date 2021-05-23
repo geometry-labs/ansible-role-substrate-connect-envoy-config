@@ -1,4 +1,4 @@
-{% for network in network_settings %}
+{% for network in network_settings | from_json | dict2items %}
 {% for protocol in ["json", "ws"] %}
 curl http://127.0.0.1:8500/v1/agent/connect/ca/leaf/{{ network['shortname'] }}-{{ protocol }}-sidecar-proxy > /etc/consul/ssl/{{ network['shortname'] }}-{{ protocol }}-cert-resp
 
