@@ -22,6 +22,8 @@
 - name: Run cert refresh script
   script:
     cmd: /etc/consul/refresh_certs.sh
+  vars:
+    settings: "{{ network_settings | from_json | dict2items }}"
 
 - name: Install cert refresh cron
   cron:
