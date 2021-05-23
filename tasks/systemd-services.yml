@@ -9,12 +9,12 @@
     vars:
       protocol: "json"
       network_name: "{{ item.value['shortname'] }}"
-      instance_id: aws_instance_id.content
+      instance_id: "{{ aws_instance_id.content }}"
       envoy_port: "{{ item.value['json_envoy'] }}"
 
   - name: Create unit file for WS endpoint
     template:
-      src: direct_service_template.json.j2
+      src: connect_envoy.service.j2
       dest: /etc/systemd/system/service_{{ item.value['shortname'] }}_ws.service
       owner: root
       group: root
@@ -22,5 +22,5 @@
     vars:
       protocol: "ws"
       network_name: "{{ item.value['shortname'] }}"
-      instance_id: aws_instance_id.content
+      instance_id: "{{ aws_instance_id.content }}"
       envoy_port: "{{ item.value['ws_envoy'] }}"

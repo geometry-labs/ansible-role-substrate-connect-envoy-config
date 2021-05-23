@@ -12,7 +12,7 @@
       service_port: "{{ item.value['json_rpc'] }}"
       json_service_port: "{{ item.value['json_rpc'] }}"
       envoy_port: "{{ item.value['json_envoy'] }}"
-      instance_id: aws_instance_id.content
+      instance_id: "{{ aws_instance_id.content }}"
 
   - name: Create service file for WS endpoint
     template:
@@ -27,9 +27,9 @@
       service_port: "{{ item.value['ws_rpc'] }}"
       json_service_port: "{{ item.value['json_rpc'] }}"
       envoy_port: "{{ item.value['ws_envoy'] }}"
-      instance_id: aws_instance_id.content
+      instance_id: "{{ aws_instance_id.content }}"
 
-  when: not health_check_enabled
+  when: not health_check_enabled | bool
 
 - block:
   - name: Create service file for JSON endpoint
@@ -45,7 +45,7 @@
       service_port: "{{ item.value['json_rpc'] }}"
       health_check_port: "{{ item.value['api_health'] }}"
       envoy_port: "{{ item.value['json_envoy'] }}"
-      instance_id: aws_instance_id.content
+      instance_id: "{{ aws_instance_id.content }}"
 
   - name: Create service file for WS endpoint
     template:
@@ -60,6 +60,6 @@
       service_port: "{{ item.value['json_rpc'] }}"
       health_check_port: "{{ item.value['api_health'] }}"
       envoy_port: "{{ item.value['ws_envoy'] }}"
-      instance_id: aws_instance_id.content
+      instance_id: "{{ aws_instance_id.content }}"
 
-  when: health_check_enabled
+  when: health_check_enabled | bool
