@@ -4,7 +4,7 @@ Description=Envoy Proxy for {{ network_name }}
 [Service]
 User=root
 Group=root
-ExecStart=/usr/bin/consul connect envoy \
+ExecStart=/usr/local/bin/consul connect envoy \
           -sidecar-for {{ instance_id }}-{{ network_name }}-{{ protocol }} \
           -grpc-addr=https://127.0.0.1:8502 \
           -ca-file=/etc/consul/ssl/connect-root.crt \
