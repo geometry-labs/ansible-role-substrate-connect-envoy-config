@@ -22,4 +22,4 @@
 - name: Reload Consul service
   systemd:
     name: consul
-    state: reloaded
+    state: restarted
