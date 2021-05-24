@@ -14,16 +14,17 @@
 - name: Template cert refresh script
   template:
     src: refresh_certs.sh.j2
-    dest: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}"
+    dest: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}.sh"
     owner: root
     group: root
     mode: '0744'
   loop: "{{ network_settings | from_json | dict2items }}"
 
 - name: Run cert refresh script
-  script:
-    cmd: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}"
+  command:
+    cmd: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}.sh"
   loop: "{{ network_settings | from_json | dict2items }}"
+  changed_when: false
 
 - name: Install cert refresh cron
   cron:
