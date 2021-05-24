@@ -18,3 +18,8 @@
 
 - name: Run certificate tasks
   import_tasks: certs.yml
+
+- name: Reload Consul service
+  systemd:
+    name: consul
+    state: reloaded

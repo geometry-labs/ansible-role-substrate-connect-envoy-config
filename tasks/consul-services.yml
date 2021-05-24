@@ -3,8 +3,8 @@
     template:
       src: direct_service_template.json.j2
       dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_json.json"
-      owner: root
-      group: root
+      owner: consul
+      group: bin
       mode: 0600
     vars:
       protocol: "json"
@@ -18,8 +18,8 @@
     template:
       src: direct_service_template.json.j2
       dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_ws.json"
-      owner: root
-      group: root
+      owner: consul
+      group: bin
       mode: 0600
     vars:
       protocol: "ws"
@@ -36,8 +36,8 @@
     template:
       src: health_checked_service_template.json.j2
       dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_json.json"
-      owner: root
-      group: root
+      owner: consul
+      group: bin
       mode: 0600
     vars:
       protocol: "json"
@@ -51,8 +51,8 @@
     template:
       src: health_checked_service_template.json.j2
       dest: "/etc/consul/consul.d/service_{{ item.value['shortname'] }}_ws.json"
-      owner: root
-      group: root
+      owner: consul
+      group: bin
       mode: 0600
     vars:
       protocol: "ws"
