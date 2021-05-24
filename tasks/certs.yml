@@ -14,20 +14,21 @@
 - name: Template cert refresh script
   template:
     src: refresh_certs.sh.j2
-    dest: /etc/consul/refresh_certs.sh
+    dest: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}"
     owner: root
     group: root
     mode: '0744'
-  vars:
-    settings: "{{ network_settings | from_json | dict2items }}"
+  loop: "{{ network_settings | from_json | dict2items }}"
 
 - name: Run cert refresh script
   script:
-    cmd: /etc/consul/refresh_certs.sh
+    cmd: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}"
+  loop: "{{ network_settings | from_json | dict2items }}"
 
 - name: Install cert refresh cron
   cron:
     name: "Refresh mTLS certs"
     minute: "{{ 60 | random(seed=aws_instance_id.content) }}"
     hour: 3
-    job: "/etc/consul/refresh_certs.sh"
+    job: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}"
+  loop: "{{ network_settings | from_json | dict2items }}"
