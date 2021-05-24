@@ -12,12 +12,12 @@
   include_tasks: consul-services.yml
   loop: "{{ network_settings | from_json | dict2items }}"
 
+- name: Run certificate tasks
+  import_tasks: certs.yml
+
 - name: Create systemd services
   include_tasks: systemd-services.yml
   loop: "{{ network_settings | from_json | dict2items }}"
-
-- name: Run certificate tasks
-  import_tasks: certs.yml
 
 - name: Reload Consul service
   systemd:

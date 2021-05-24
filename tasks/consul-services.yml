@@ -63,17 +63,3 @@
       instance_id: "{{ aws_instance_id.content }}"
 
   when: health_check_enabled | bool
-
-- name: Enable JSON endpoint service
-  systemd:
-    name: "service_{{ item.value['shortname'] }}_json"
-    enabled: yes
-    state: started
-    no_block: yes
-
-- name: Enable WS endpoint service
-  systemd:
-    name: "service_{{ item.value['shortname'] }}_ws"
-    enabled: yes
-    state: started
-    no_block: yes
