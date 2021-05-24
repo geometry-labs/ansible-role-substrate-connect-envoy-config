@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 {% for protocol in ["json", "ws"] %}
 curl http://127.0.0.1:8500/v1/agent/connect/ca/leaf/{{ item.value['shortname'] }}-{{ protocol }}-sidecar-proxy > /etc/consul/ssl/{{ item.value['shortname'] }}-{{ protocol }}-cert-resp
 
