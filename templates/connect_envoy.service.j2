@@ -7,7 +7,7 @@ Group=root
 ExecStart=/usr/local/bin/consul connect envoy \
           -sidecar-for {{ instance_id }}-{{ network_name }}-{{ protocol }} \
           -grpc-addr=https://127.0.0.1:8502 \
-          -ca-file=/etc/consul/ssl/connect-root.crt \
+          -ca-file=/etc/consul/ssl/connect-ca.crt \
           -client-cert=/etc/consul/ssl/{{ network_name }}-{{ protocol }}.crt \
           -client-key=/etc/consul/ssl/{{ network_name }}-{{ protocol }}.key \
           -admin-bind=127.0.0.1:{{ envoy_port }}
