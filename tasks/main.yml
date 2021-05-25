@@ -14,17 +14,6 @@
     url: "http://169.254.169.254/latest/meta-data/instance-id"
     return_content: yes
   register: aws_instance_id
-  when: instance_type == "node"
-
-- name: Set instance ID fact (ASG)
-  set_fact:
-    this_instance_id: "{% raw %}{{ instance_id }}'{% endraw %}"
-  when: instance_type == "asg"
-
-- name: Set instance ID fact (node)
-  set_fact:
-    this_instance_id: aws_instance_id.content
-  when: instance_type == "node"
 
 - name: Write deployed networks file
   copy:

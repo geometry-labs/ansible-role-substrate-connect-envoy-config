@@ -1,7 +1,12 @@
 {
     "service": {
         "name": "{{ network_name }}-{{ protocol }}",
+        {% if instance_type == "asg" %}
+        "id": "{% raw %}{{ instance_id }}{% endraw %}-{{ network_name }}-{{ protocol }}",
+        {% endif %}
+        {% if instance_type == "node" %}
         "id": "{{ instance_id }}-{{ network_name }}-{{ protocol }}",
+        {% endif %}
         "port": {{ service_port }},
         "connect": {
             "sidecar_service": {

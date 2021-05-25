@@ -5,7 +5,12 @@ Description=Envoy Proxy for {{ network_name }}
 User=root
 Group=root
 ExecStart=/usr/local/bin/consul connect envoy \
+          {% if instance_type == "asg" %}
+          -sidecar-for {% raw %}{{ instance_id }}{% endraw %}-{{ network_name }}-{{ protocol }} \
+          {% endif %}
+          {% if instance_type == "node" %}
           -sidecar-for {{ instance_id }}-{{ network_name }}-{{ protocol }} \
+          {% endif %}
           -grpc-addr=https://127.0.0.1:8502 \
           -ca-file=/etc/consul/ssl/connect-ca.crt \
           -client-cert=/etc/consul/ssl/{{ network_name }}-{{ protocol }}.crt \
