@@ -9,7 +9,7 @@
     vars:
       protocol: "json"
       network_name: "{{ item.value['shortname'] }}"
-      instance_id: "{{ aws_instance_id.content }}"
+      instance_id: "{{ this_instance_id }}"
       envoy_port: "{{ item.value['json_envoy'] }}"
 
   - name: Create unit file for WS endpoint
@@ -22,7 +22,7 @@
     vars:
       protocol: "ws"
       network_name: "{{ item.value['shortname'] }}"
-      instance_id: "{{ aws_instance_id.content }}"
+      instance_id: "{{ this_instance_id }}"
       envoy_port: "{{ item.value['ws_envoy'] }}"
 
 - name: Enable JSON endpoint service
