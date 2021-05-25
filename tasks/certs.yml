@@ -25,6 +25,7 @@
     cmd: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}.sh"
   loop: "{{ network_settings | from_json | dict2items }}"
   changed_when: false
+  when: instance_type != "asg"
 
 - name: Install cert refresh cron
   cron:

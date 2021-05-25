@@ -1,9 +1,26 @@
 ---
+- name: Install jinja2-cli
+  pip:
+    name: jinja2-cli
+
 - name: Fetch instance ID
   uri:
     url: "http://169.254.169.254/latest/meta-data/instance-id"
     return_content: yes
   register: aws_instance_id
+  when: instance_type == "node"
+
+- name: Set instance ID fact
+  set_fact: aws_instance_id.content = "\{\{ instance_id \}\}"
+  when: instance_type == "asg"
+
+- name: Write deployed networks file
+  copy:
+    dest: "/home/ubuntu/deployed_networks"
+    content: "{{ deployed_networks }}"
+    owner: ubuntu
+    group: ubuntu
+    mode: 0777
 
 - name: Firewall rules
   import_tasks: ufw.yml
