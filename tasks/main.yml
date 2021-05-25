@@ -1,4 +1,10 @@
 ---
+- name: Ensure pip3
+  apt:
+    name: pip3
+    state: present
+    update_cache: yes
+
 - name: Install jinja2-cli
   pip:
     name: jinja2-cli
