@@ -41,3 +41,19 @@
   systemd:
     name: consul
     state: restarted
+  when: instance_type == "node"
+
+- block:
+  - name: Graceful leave Consul cluster
+    command: consul leave
+
+  - name: Stop Consul service
+    systemd:
+      name: consul
+      state: stopped
+
+  - name: Remove Consul node-id file
+    file:
+      path: /var/consul/node-id
+      state: absent
+  when: instance_type == "asg"
