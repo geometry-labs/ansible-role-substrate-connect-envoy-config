@@ -14,4 +14,6 @@ cat /etc/consul/ssl/{{ item.value['shortname'] }}-{{ protocol }}-cert-resp | jq 
 chown consul:bin /etc/consul/ssl/{{ item.value['shortname'] }}-{{ protocol }}.key
 chmod 640 /etc/consul/ssl/{{ item.value['shortname'] }}-{{ protocol }}.key
 
+systemctl reload service_{{ item.value['shortname'] }}_{{ protocol }}
+
 {% endfor %}

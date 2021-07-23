@@ -57,7 +57,7 @@
     vars:
       protocol: "ws"
       network_name: "{{ item.value['shortname'] }}"
-      service_port: "{{ item.value['json_rpc'] }}"
+      service_port: "{{ item.value['ws_rpc'] }}"
       health_check_port: "{{ item.value['api_health'] }}"
       envoy_port: "{{ item.value['ws_envoy'] }}"
       instance_id: "{{ aws_instance_id.content }}"
