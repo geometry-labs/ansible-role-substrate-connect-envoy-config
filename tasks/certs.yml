@@ -32,5 +32,5 @@
     name: "Refresh {{ item.value['shortname'] }} mTLS certs"
     minute: "{{ 60 | random(seed=aws_instance_id.content) }}"
     hour: 3
-    job: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}"
+    job: "/etc/consul/refresh_certs_{{ item.value['shortname'] }}.sh"
   loop: "{{ network_settings | from_json | dict2items }}"
