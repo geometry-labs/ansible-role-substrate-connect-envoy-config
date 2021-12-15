@@ -17,7 +17,7 @@ ExecStart=/usr/local/bin/consul connect envoy \
           -client-key=/etc/consul/ssl/{{ network_name }}-{{ protocol }}.key \
           -admin-bind=127.0.0.1:{{ envoy_port|int - 2000 }} \
           -- --restart-epoch 0 \
-          --base-id {{ envoy_port|int - 21000 }}
+          --base-id {{ envoy_port|int - 20990 }}
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill -TERM $MAINPID
 Restart=always
