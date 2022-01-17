@@ -17,7 +17,10 @@
             "http": "http://localhost:{{ health_check_port }}",
             "method": "GET",
             "interval": "15s",
-            "timeout": "5s"
+            "timeout": "5s",
+            "success_before_passing": 0,
+            "failures_before_warning": 4,
+            "failures_before_critical": 8,
         }
     }
 }
